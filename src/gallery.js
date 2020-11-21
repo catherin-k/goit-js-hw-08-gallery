@@ -28,7 +28,8 @@ refs.gallery.innerHTML = galleryListMarkup;
 refs.gallery.addEventListener("click", onGalleryClick);
 refs.btnClose.addEventListener("click", onModalClose);
 refs.overlay.addEventListener("click", onModalClose);
-window.addEventListener("keydown", closeByEscape);
+
+window.addEventListener("keydown", onKyePress);
 
 function onGalleryClick(event) {
   event.preventDefault();
@@ -36,11 +37,13 @@ function onGalleryClick(event) {
     return;
   }
   // відкриття модального вікна
+  window.addEventListener("keydown", closeByEscape);
   refs.lightbox.classList.add("is-open");
   refs.lightbox__img.src = event.target.getAttribute("data-source");
 }
 
-function onModalClose(event) {
+function onModalClose() {
+  window.removeEventListener("keydown", closeByEscape);
   refs.lightbox__img.src = "";
   refs.lightbox.classList.remove("is-open");
 }
@@ -48,7 +51,14 @@ function onModalClose(event) {
 // Закриття модального вікна клавішою Escape
 function closeByEscape(event) {
   if (event.code === "Escape") {
-    refs.lightbox.classList.remove("is-open");
+    onModalClose();
+    console.log("terrible");
+  }
+}
+
+function onKyePress(event) {
+  if (event.code === "39") {
+    refs.lightbox__img.src = images.index += 1;
   }
 }
 
