@@ -4,7 +4,7 @@ const refs = {
   gallery: document.querySelector(".js-gallery"),
   lightbox: document.querySelector(".js-lightbox"),
   lightbox__img: document.querySelector(".lightbox__image"),
-  lightbox__button: document.querySelector(".lightbox__button"),
+  btnClose: document.querySelector('[data-action="close-lightbox"]'),
   overlay: document.querySelector(".lightbox__overlay"),
 };
 console.log(refs.overlay);
@@ -26,13 +26,13 @@ refs.gallery.innerHTML = galleryListMarkup;
 // Реалізація делегування на галереї ul.js-gallery і отримання url великого зображення.
 
 refs.gallery.addEventListener("click", onGalleryClick);
-refs.lightbox__button.addEventListener("click", onModalClose);
+refs.btnClose.addEventListener("click", onModalClose);
 refs.overlay.addEventListener("click", onModalClose);
+window.addEventListener("keydown", closeByEscape);
 
 function onGalleryClick(event) {
   event.preventDefault();
   if (event.target.nodeName !== "IMG") {
-    console.log("NONONO");
     return;
   }
   // відкриття модального вікна
@@ -44,4 +44,12 @@ function onModalClose(event) {
   refs.lightbox__img.src = "";
   refs.lightbox.classList.remove("is-open");
 }
+
+// Закриття модального вікна клавішою Escape
+function closeByEscape(event) {
+  if (event.code === "Escape") {
+    refs.lightbox.classList.remove("is-open");
+  }
+}
+
 console.dir(onGalleryClick);
