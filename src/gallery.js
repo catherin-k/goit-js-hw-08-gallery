@@ -28,7 +28,6 @@ refs.gallery.innerHTML = galleryListMarkup;
 refs.gallery.addEventListener("click", onGalleryClick);
 refs.btnClose.addEventListener("click", onModalClose);
 refs.overlay.addEventListener("click", onModalClose);
-
 window.addEventListener("keydown", onKyePress);
 
 function onGalleryClick(event) {
@@ -40,11 +39,15 @@ function onGalleryClick(event) {
   window.addEventListener("keydown", closeByEscape);
   refs.lightbox.classList.add("is-open");
   refs.lightbox__img.src = event.target.getAttribute("data-source");
+  refs.lightbox__img.alt = event.target.getAttribute("alt");
 }
 
 function onModalClose() {
   window.removeEventListener("keydown", closeByEscape);
+  window.removeEventListener("keydown", onKyePress);
+
   refs.lightbox__img.src = "";
+  refs.lightbox__img.alt = "";
   refs.lightbox.classList.remove("is-open");
 }
 
@@ -62,14 +65,12 @@ function onKyePress(event) {
   let index = images.findIndex(
     (img) => img.original === refs.lightbox__img.src
   );
-  console.log(index);
 
   if (event.code === "ArrowLeft") {
     if (index === 0) {
       return;
     }
     index -= 1;
-    console.log(index);
   }
 
   if (event.code === "ArrowRight") {
@@ -80,7 +81,8 @@ function onKyePress(event) {
   }
 
   refs.lightbox__img.src = images[index].original;
+  refs.lightbox__img.alt = images[index].description;
 }
-window.addEventListener("keydown", (event) => {
-  console.log("code:", event.code);
-});
+// window.addEventListener("keydown", (event) => {
+//   console.log("code:", event.code);
+// });
