@@ -63,7 +63,7 @@ function closeByEscape(event) {
 }
 
 // Прокрутка зображень клавішами ліво-право
-window.addEventListener("keydown", onKyePress);
+
 function onKyePress(event) {
   let index = images.findIndex(
     (img) => img.original === refs.lightbox__img.src
