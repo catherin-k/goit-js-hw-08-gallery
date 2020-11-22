@@ -28,7 +28,6 @@ refs.gallery.innerHTML = galleryListMarkup;
 refs.gallery.addEventListener("click", onGalleryClick);
 refs.btnClose.addEventListener("click", onModalClose);
 refs.overlay.addEventListener("click", onModalClose);
-window.addEventListener("keydown", onKyePress);
 
 function onGalleryClick(event) {
   event.preventDefault();
@@ -37,6 +36,7 @@ function onGalleryClick(event) {
   }
   // відкриття модального вікна
   window.addEventListener("keydown", closeByEscape);
+  window.addEventListener("keydown", onKyePress);
   refs.lightbox.classList.add("is-open");
   refs.lightbox__img.src = event.target.getAttribute("data-source");
   refs.lightbox__img.alt = event.target.getAttribute("alt");
@@ -55,11 +55,9 @@ function onModalClose() {
 function closeByEscape(event) {
   if (event.code === "Escape") {
     onModalClose();
-    console.log("terrible");
   }
 }
-
-console.log(images);
+// Прокрутка зображень клавішами ліво-право
 window.addEventListener("keydown", onKyePress);
 function onKyePress(event) {
   let index = images.findIndex(
