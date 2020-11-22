@@ -56,10 +56,31 @@ function closeByEscape(event) {
   }
 }
 
+console.log(images);
+window.addEventListener("keydown", onKyePress);
 function onKyePress(event) {
-  if (event.code === "39") {
-    refs.lightbox__img.src = images.index += 1;
-  }
-}
+  let index = images.findIndex(
+    (img) => img.original === refs.lightbox__img.src
+  );
+  console.log(index);
 
-console.dir(onGalleryClick);
+  if (event.code === "ArrowLeft") {
+    if (index === 0) {
+      return;
+    }
+    index -= 1;
+    console.log(index);
+  }
+
+  if (event.code === "ArrowRight") {
+    if (index === images.length - 1) {
+      return;
+    }
+    index += 1;
+  }
+
+  refs.lightbox__img.src = images[index].original;
+}
+window.addEventListener("keydown", (event) => {
+  console.log("code:", event.code);
+});
